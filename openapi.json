@@ -1,0 +1,4796 @@
+{
+  "components": {
+    "schemas": {
+      "ActionItem": {
+        "properties": {
+          "due": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "ISO date if a deadline is stated",
+            "title": "Due"
+          },
+          "task": {
+            "title": "Task",
+            "type": "string"
+          }
+        },
+        "required": [
+          "task"
+        ],
+        "title": "ActionItem",
+        "type": "object"
+      },
+      "ActivityItem": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "actor": {
+            "title": "Actor",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "detail": {
+            "additionalProperties": true,
+            "title": "Detail",
+            "type": "object"
+          },
+          "email_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error",
+              "blocked",
+              "auto"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "tool": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tool"
+          },
+          "undo_action_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undo Action Id"
+          },
+          "undo_until": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undo Until"
+          }
+        },
+        "required": [
+          "id",
+          "actor",
+          "action",
+          "tool",
+          "email_id",
+          "detail",
+          "status",
+          "created_at"
+        ],
+        "title": "ActivityItem",
+        "type": "object"
+      },
+      "ActivityPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "ActivityPage",
+        "type": "object"
+      },
+      "AgendaEvent": {
+        "properties": {
+          "action_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Id"
+          },
+          "all_day": {
+            "default": false,
+            "title": "All Day",
+            "type": "boolean"
+          },
+          "attendees": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Attendees",
+            "type": "array"
+          },
+          "auto_added": {
+            "default": false,
+            "title": "Auto Added",
+            "type": "boolean"
+          },
+          "end": {
+            "title": "End",
+            "type": "string"
+          },
+          "html_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Html Link"
+          },
+          "ical_uid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ical Uid"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "meet_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meet Link"
+          },
+          "my_response": {
+            "anyOf": [
+              {
+                "enum": [
+                  "accepted",
+                  "tentative",
+                  "declined",
+                  "needsAction"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "My Response"
+          },
+          "organizer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizer"
+          },
+          "start": {
+            "title": "Start",
+            "type": "string"
+          },
+          "summary": {
+            "default": "",
+            "title": "Summary",
+            "type": "string"
+          },
+          "transparent": {
+            "default": false,
+            "title": "Transparent",
+            "type": "boolean"
+          },
+          "undo_until": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undo Until"
+          }
+        },
+        "required": [
+          "id",
+          "start",
+          "end"
+        ],
+        "title": "AgendaEvent",
+        "type": "object"
+      },
+      "AgendaResponse": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/AgendaEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "proposals": {
+            "items": {
+              "$ref": "#/components/schemas/ProposedEvent"
+            },
+            "title": "Proposals",
+            "type": "array"
+          }
+        },
+        "required": [
+          "events",
+          "proposals"
+        ],
+        "title": "AgendaResponse",
+        "type": "object"
+      },
+      "ApprovalDecision": {
+        "description": "The user's answer. Only the fields relevant to the approval kind are used.",
+        "properties": {
+          "action": {
+            "enum": [
+              "approve",
+              "reject"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "attendees": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "email",
+                  "type": "string"
+                },
+                "maxItems": 50,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attendees"
+          },
+          "edited_body": {
+            "anyOf": [
+              {
+                "maxLength": 20000,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited Body"
+          },
+          "response": {
+            "anyOf": [
+              {
+                "enum": [
+                  "accepted",
+                  "tentative",
+                  "declined"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response"
+          },
+          "slot_index": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slot Index"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "variant_index": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant Index"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "ApprovalDecision",
+        "type": "object"
+      },
+      "ApprovalEmail": {
+        "properties": {
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "received_at": {
+            "title": "Received At",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "from_email",
+          "from_name",
+          "received_at"
+        ],
+        "title": "ApprovalEmail",
+        "type": "object"
+      },
+      "ApprovalList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApprovalOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ApprovalList",
+        "type": "object"
+      },
+      "ApprovalOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "decided_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided At"
+          },
+          "email_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "draft",
+              "event",
+              "invite_response"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/ApprovalPayload"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "approved",
+              "rejected",
+              "expired",
+              "stale"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "status",
+          "email_id",
+          "payload",
+          "warnings",
+          "result",
+          "created_at",
+          "decided_at"
+        ],
+        "title": "ApprovalOut",
+        "type": "object"
+      },
+      "ApprovalPayload": {
+        "description": "Everything the Approvals page shows for one item.",
+        "properties": {
+          "autonomy_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Autonomy Reason"
+          },
+          "email": {
+            "$ref": "#/components/schemas/ApprovalEmail"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "scheduling": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SchedulingDecision"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "slots": {
+            "items": {
+              "$ref": "#/components/schemas/Slot"
+            },
+            "title": "Slots",
+            "type": "array"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "variants": {
+            "items": {
+              "$ref": "#/components/schemas/DraftVariant"
+            },
+            "title": "Variants",
+            "type": "array"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "title": "ApprovalPayload",
+        "type": "object"
+      },
+      "AttachmentItem": {
+        "properties": {
+          "email_id": {
+            "format": "uuid",
+            "title": "Email Id",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "mime_type": {
+            "title": "Mime Type",
+            "type": "string"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "sender_email": {
+            "title": "Sender Email",
+            "type": "string"
+          },
+          "sender_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sender Name"
+          },
+          "size_bytes": {
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email_id",
+          "filename",
+          "mime_type",
+          "size_bytes",
+          "sender_email",
+          "sender_name",
+          "subject",
+          "received_at"
+        ],
+        "title": "AttachmentItem",
+        "type": "object"
+      },
+      "ChatDoneEvent": {
+        "properties": {
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "message_id": {
+            "format": "uuid",
+            "title": "Message Id",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/ChatStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "type": {
+            "const": "done",
+            "default": "done",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "message_id",
+          "content",
+          "citations",
+          "steps"
+        ],
+        "title": "ChatDoneEvent",
+        "type": "object"
+      },
+      "ChatErrorEvent": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "const": "error",
+            "default": "error",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ChatErrorEvent",
+        "type": "object"
+      },
+      "ChatMessageOut": {
+        "properties": {
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/ChatStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "content",
+          "steps",
+          "citations",
+          "created_at"
+        ],
+        "title": "ChatMessageOut",
+        "type": "object"
+      },
+      "ChatRequest": {
+        "properties": {
+          "message": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "ChatRequest",
+        "type": "object"
+      },
+      "ChatSessionDetail": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/ChatMessageOut"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "messages"
+        ],
+        "title": "ChatSessionDetail",
+        "type": "object"
+      },
+      "ChatSessionSummary": {
+        "properties": {
+          "message_count": {
+            "title": "Message Count",
+            "type": "integer"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "title",
+          "message_count",
+          "updated_at"
+        ],
+        "title": "ChatSessionSummary",
+        "type": "object"
+      },
+      "ChatStep": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "tool": {
+            "title": "Tool",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool",
+          "label"
+        ],
+        "title": "ChatStep",
+        "type": "object"
+      },
+      "ChatStepEvent": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "tool": {
+            "title": "Tool",
+            "type": "string"
+          },
+          "type": {
+            "const": "step",
+            "default": "step",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool",
+          "label"
+        ],
+        "title": "ChatStepEvent",
+        "type": "object"
+      },
+      "ChatStreamEvent": {
+        "discriminator": {
+          "mapping": {
+            "done": "#/components/schemas/ChatDoneEvent",
+            "error": "#/components/schemas/ChatErrorEvent",
+            "step": "#/components/schemas/ChatStepEvent",
+            "token": "#/components/schemas/ChatTokenEvent"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ChatStepEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ChatTokenEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ChatDoneEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ChatErrorEvent"
+          }
+        ]
+      },
+      "ChatTokenEvent": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "token",
+            "default": "token",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "ChatTokenEvent",
+        "type": "object"
+      },
+      "Citation": {
+        "description": "An email the answer is based on (shown as a chip).",
+        "properties": {
+          "email_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Email Id"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "thread_id": {
+            "title": "Thread Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "thread_id",
+          "subject"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "DashboardResponse": {
+        "description": "Counts for the last 7 days of received mail, plus what is waiting for the user.",
+        "properties": {
+          "auto_actions_today": {
+            "title": "Auto Actions Today",
+            "type": "integer"
+          },
+          "by_category": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Category",
+            "type": "object"
+          },
+          "by_sentiment": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Sentiment",
+            "type": "object"
+          },
+          "pending_approvals": {
+            "title": "Pending Approvals",
+            "type": "integer"
+          },
+          "priority_queue": {
+            "items": {
+              "$ref": "#/components/schemas/PriorityItem"
+            },
+            "title": "Priority Queue",
+            "type": "array"
+          },
+          "suspicious": {
+            "title": "Suspicious",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "unread": {
+            "title": "Unread",
+            "type": "integer"
+          },
+          "window_days": {
+            "title": "Window Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "window_days",
+          "total",
+          "unread",
+          "by_category",
+          "by_sentiment",
+          "priority_queue",
+          "pending_approvals",
+          "auto_actions_today",
+          "suspicious"
+        ],
+        "title": "DashboardResponse",
+        "type": "object"
+      },
+      "DecideResponse": {
+        "properties": {
+          "approval": {
+            "$ref": "#/components/schemas/ApprovalOut"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "done",
+              "rejected",
+              "stale",
+              "failed"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          }
+        },
+        "required": [
+          "approval",
+          "outcome",
+          "message"
+        ],
+        "title": "DecideResponse",
+        "type": "object"
+      },
+      "DeleteAccountBody": {
+        "description": "The user must type \"delete\" to confirm.",
+        "properties": {
+          "confirm": {
+            "const": "delete",
+            "title": "Confirm",
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirm"
+        ],
+        "title": "DeleteAccountBody",
+        "type": "object"
+      },
+      "Digest": {
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "headline": {
+            "title": "Headline",
+            "type": "string"
+          },
+          "meetings": {
+            "items": {
+              "$ref": "#/components/schemas/DigestMeeting"
+            },
+            "title": "Meetings",
+            "type": "array"
+          },
+          "needs_attention": {
+            "items": {
+              "$ref": "#/components/schemas/DigestEmail"
+            },
+            "title": "Needs Attention",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "headline",
+          "summary",
+          "needs_attention",
+          "meetings",
+          "generated_at"
+        ],
+        "title": "Digest",
+        "type": "object"
+      },
+      "DigestEmail": {
+        "properties": {
+          "email_id": {
+            "format": "uuid",
+            "title": "Email Id",
+            "type": "string"
+          },
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "boolean"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email_id",
+          "subject",
+          "from_name",
+          "from_email",
+          "summary",
+          "priority",
+          "needs_reply"
+        ],
+        "title": "DigestEmail",
+        "type": "object"
+      },
+      "DigestMeeting": {
+        "properties": {
+          "auto_added": {
+            "default": false,
+            "title": "Auto Added",
+            "type": "boolean"
+          },
+          "end": {
+            "title": "End",
+            "type": "string"
+          },
+          "start": {
+            "title": "Start",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "start",
+          "end"
+        ],
+        "title": "DigestMeeting",
+        "type": "object"
+      },
+      "DraftVariant": {
+        "properties": {
+          "body": {
+            "description": "The reply text, without sign-off or signature",
+            "title": "Body",
+            "type": "string"
+          },
+          "label": {
+            "description": "Short name such as 'Short', 'Detailed', 'Polite decline'",
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "body"
+        ],
+        "title": "DraftVariant",
+        "type": "object"
+      },
+      "EmailDetail": {
+        "properties": {
+          "attachments": {
+            "items": {
+              "$ref": "#/components/schemas/AttachmentItem"
+            },
+            "title": "Attachments",
+            "type": "array"
+          },
+          "body_html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body Html"
+          },
+          "body_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body Text"
+          },
+          "cc": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cc",
+            "type": "array"
+          },
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "gmail_id": {
+            "title": "Gmail Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "insight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InsightDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "invite": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InviteInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "is_sent": {
+            "title": "Is Sent",
+            "type": "boolean"
+          },
+          "is_unread": {
+            "title": "Is Unread",
+            "type": "boolean"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "scheduling": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SchedulingInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "snippet": {
+            "title": "Snippet",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "thread": {
+            "items": {
+              "$ref": "#/components/schemas/ThreadMessage"
+            },
+            "title": "Thread",
+            "type": "array"
+          },
+          "thread_id": {
+            "title": "Thread Id",
+            "type": "string"
+          },
+          "to": {
+            "items": {
+              "type": "string"
+            },
+            "title": "To",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "gmail_id",
+          "thread_id",
+          "from_email",
+          "from_name",
+          "to",
+          "cc",
+          "subject",
+          "snippet",
+          "body_text",
+          "body_html",
+          "received_at",
+          "is_unread",
+          "is_sent",
+          "invite",
+          "insight",
+          "attachments",
+          "thread"
+        ],
+        "title": "EmailDetail",
+        "type": "object"
+      },
+      "EmailListItem": {
+        "properties": {
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "has_attachments": {
+            "title": "Has Attachments",
+            "type": "boolean"
+          },
+          "has_invite": {
+            "title": "Has Invite",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "insight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InsightBrief"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "is_unread": {
+            "title": "Is Unread",
+            "type": "boolean"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "snippet": {
+            "title": "Snippet",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "thread_id": {
+            "title": "Thread Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "thread_id",
+          "from_email",
+          "from_name",
+          "subject",
+          "snippet",
+          "received_at",
+          "is_unread",
+          "has_attachments",
+          "has_invite",
+          "insight"
+        ],
+        "title": "EmailListItem",
+        "type": "object"
+      },
+      "EmailListResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EmailListItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "EmailListResponse",
+        "type": "object"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorBody",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "description": "Shape of every error response from the API.",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "FlowStartResponse": {
+        "description": "Result of \"Draft reply\" / \"Find a time\".",
+        "properties": {
+          "approval_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Id"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "approval_created",
+              "auto_scheduled",
+              "nothing_to_do"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "approval_id",
+          "message"
+        ],
+        "title": "FlowStartResponse",
+        "type": "object"
+      },
+      "FocusBlock": {
+        "properties": {
+          "day": {
+            "enum": [
+              "mon",
+              "tue",
+              "wed",
+              "thu",
+              "fri",
+              "sat",
+              "sun"
+            ],
+            "title": "Day",
+            "type": "string"
+          },
+          "end": {
+            "format": "time",
+            "title": "End",
+            "type": "string"
+          },
+          "start": {
+            "format": "time",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "day",
+          "start",
+          "end"
+        ],
+        "title": "FocusBlock",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "InsightBrief": {
+        "description": "The AI chips shown in the inbox list.",
+        "properties": {
+          "category": {
+            "enum": [
+              "action_required",
+              "fyi",
+              "meeting_request",
+              "newsletter",
+              "promotion",
+              "other"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "has_meeting_intent": {
+            "title": "Has Meeting Intent",
+            "type": "boolean"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "boolean"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "sentiment": {
+            "enum": [
+              "positive",
+              "neutral",
+              "negative",
+              "frustrated",
+              "urgent"
+            ],
+            "title": "Sentiment",
+            "type": "string"
+          },
+          "sentiment_score": {
+            "title": "Sentiment Score",
+            "type": "number"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "suspicious": {
+            "title": "Suspicious",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "category",
+          "priority",
+          "sentiment",
+          "sentiment_score",
+          "summary",
+          "needs_reply",
+          "suspicious",
+          "has_meeting_intent"
+        ],
+        "title": "InsightBrief",
+        "type": "object"
+      },
+      "InsightDetail": {
+        "description": "Everything triage found, shown in the AI panel.",
+        "properties": {
+          "action_items": {
+            "items": {
+              "$ref": "#/components/schemas/ActionItem"
+            },
+            "title": "Action Items",
+            "type": "array"
+          },
+          "category": {
+            "enum": [
+              "action_required",
+              "fyi",
+              "meeting_request",
+              "newsletter",
+              "promotion",
+              "other"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "has_meeting_intent": {
+            "title": "Has Meeting Intent",
+            "type": "boolean"
+          },
+          "meeting_intent": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MeetingIntent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "boolean"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "sentiment": {
+            "enum": [
+              "positive",
+              "neutral",
+              "negative",
+              "frustrated",
+              "urgent"
+            ],
+            "title": "Sentiment",
+            "type": "string"
+          },
+          "sentiment_score": {
+            "title": "Sentiment Score",
+            "type": "number"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "suspicious": {
+            "title": "Suspicious",
+            "type": "boolean"
+          },
+          "suspicious_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suspicious Reasons",
+            "type": "array"
+          },
+          "thread_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thread Summary"
+          }
+        },
+        "required": [
+          "category",
+          "priority",
+          "sentiment",
+          "sentiment_score",
+          "summary",
+          "needs_reply",
+          "suspicious",
+          "has_meeting_intent",
+          "thread_summary",
+          "action_items",
+          "meeting_intent",
+          "suspicious_reasons",
+          "model",
+          "provider"
+        ],
+        "title": "InsightDetail",
+        "type": "object"
+      },
+      "InviteInfo": {
+        "description": "Calendar invite details parsed from a `text/calendar` part.",
+        "properties": {
+          "end": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Method"
+          },
+          "organizer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizer"
+          },
+          "start": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "uid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uid"
+          }
+        },
+        "title": "InviteInfo",
+        "type": "object"
+      },
+      "LearnStyleResponse": {
+        "properties": {
+          "embedded": {
+            "title": "Embedded",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "embedded"
+        ],
+        "title": "LearnStyleResponse",
+        "type": "object"
+      },
+      "MarkReadBody": {
+        "description": "Mark the given notifications as read, or all of them when `ids` is empty.",
+        "properties": {
+          "ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "title": "Ids",
+            "type": "array"
+          }
+        },
+        "title": "MarkReadBody",
+        "type": "object"
+      },
+      "MeResponse": {
+        "description": "The signed-in user, as shown in the app shell.",
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_synced_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Synced At"
+          },
+          "llm_provider": {
+            "enum": [
+              "google",
+              "groq"
+            ],
+            "title": "Llm Provider",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "onboarded": {
+            "title": "Onboarded",
+            "type": "boolean"
+          },
+          "picture_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Picture Url"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "needs_reconnect"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "picture_url",
+          "status",
+          "onboarded",
+          "llm_provider"
+        ],
+        "title": "MeResponse",
+        "type": "object"
+      },
+      "MeetingIntent": {
+        "properties": {
+          "duration_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Minutes"
+          },
+          "proposed_times": {
+            "description": "ISO 8601 with offset",
+            "items": {
+              "type": "string"
+            },
+            "title": "Proposed Times",
+            "type": "array"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          },
+          "wants_meeting": {
+            "title": "Wants Meeting",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "wants_meeting"
+        ],
+        "title": "MeetingIntent",
+        "type": "object"
+      },
+      "MeetingPreferences": {
+        "properties": {
+          "add_video_link": {
+            "default": true,
+            "title": "Add Video Link",
+            "type": "boolean"
+          },
+          "auto_actions_per_day": {
+            "default": 5,
+            "maximum": 20.0,
+            "minimum": 0.0,
+            "title": "Auto Actions Per Day",
+            "type": "integer"
+          },
+          "auto_schedule": {
+            "default": "trusted",
+            "enum": [
+              "off",
+              "trusted",
+              "all"
+            ],
+            "title": "Auto Schedule",
+            "type": "string"
+          },
+          "buffer_minutes": {
+            "default": 10,
+            "maximum": 60.0,
+            "minimum": 0.0,
+            "title": "Buffer Minutes",
+            "type": "integer"
+          },
+          "default_duration_minutes": {
+            "default": 30,
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Default Duration Minutes",
+            "type": "integer"
+          },
+          "focus_blocks": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/FocusBlock"
+            },
+            "title": "Focus Blocks",
+            "type": "array"
+          },
+          "lunch_break": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TimeRange"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {
+              "end": "14:00:00",
+              "start": "13:00:00"
+            }
+          },
+          "max_meetings_per_day": {
+            "default": 6,
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Max Meetings Per Day",
+            "type": "integer"
+          },
+          "min_notice_hours": {
+            "default": 4,
+            "maximum": 72.0,
+            "minimum": 0.0,
+            "title": "Min Notice Hours",
+            "type": "integer"
+          },
+          "no_meeting_days": {
+            "default": [],
+            "items": {
+              "enum": [
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat",
+                "sun"
+              ],
+              "type": "string"
+            },
+            "title": "No Meeting Days",
+            "type": "array"
+          },
+          "preferred_times": {
+            "default": [
+              "morning"
+            ],
+            "items": {
+              "enum": [
+                "morning",
+                "afternoon",
+                "evening"
+              ],
+              "type": "string"
+            },
+            "title": "Preferred Times",
+            "type": "array"
+          },
+          "search_horizon_days": {
+            "default": 10,
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Search Horizon Days",
+            "type": "integer"
+          },
+          "trusted_domains": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Trusted Domains",
+            "type": "array"
+          },
+          "undo_window_hours": {
+            "default": 24,
+            "maximum": 72.0,
+            "minimum": 1.0,
+            "title": "Undo Window Hours",
+            "type": "integer"
+          },
+          "vip_can_override_focus": {
+            "default": false,
+            "title": "Vip Can Override Focus",
+            "type": "boolean"
+          },
+          "working_days": {
+            "default": [
+              "mon",
+              "tue",
+              "wed",
+              "thu",
+              "fri"
+            ],
+            "items": {
+              "enum": [
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat",
+                "sun"
+              ],
+              "type": "string"
+            },
+            "title": "Working Days",
+            "type": "array"
+          },
+          "working_hours": {
+            "$ref": "#/components/schemas/TimeRange",
+            "default": {
+              "end": "18:00:00",
+              "start": "09:30:00"
+            }
+          }
+        },
+        "title": "MeetingPreferences",
+        "type": "object"
+      },
+      "NoteCreate": {
+        "properties": {
+          "text": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "NoteCreate",
+        "type": "object"
+      },
+      "NoteUpdate": {
+        "description": "Edit the text, or accept/reject a learned suggestion.",
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "active",
+                  "suggested",
+                  "rejected"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "minLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          }
+        },
+        "title": "NoteUpdate",
+        "type": "object"
+      },
+      "NotificationItem": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "can_undo": {
+            "title": "Can Undo",
+            "type": "boolean"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link"
+          },
+          "read": {
+            "title": "Read",
+            "type": "boolean"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "undo_action_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undo Action Id"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "title",
+          "body",
+          "link",
+          "read",
+          "created_at",
+          "undo_action_id",
+          "can_undo"
+        ],
+        "title": "NotificationItem",
+        "type": "object"
+      },
+      "NotificationList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NotificationItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "unread_count": {
+            "title": "Unread Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "unread_count"
+        ],
+        "title": "NotificationList",
+        "type": "object"
+      },
+      "OkResponse": {
+        "properties": {
+          "ok": {
+            "default": true,
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "title": "OkResponse",
+        "type": "object"
+      },
+      "PreferenceNoteOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "user",
+              "learned"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "suggested",
+              "rejected"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "source",
+          "status",
+          "created_at"
+        ],
+        "title": "PreferenceNoteOut",
+        "type": "object"
+      },
+      "PreferencesBody": {
+        "description": "Everything on the Preferences page (GET response and PUT body).",
+        "properties": {
+          "language": {
+            "default": "English",
+            "maxLength": 64,
+            "title": "Language",
+            "type": "string"
+          },
+          "meeting_preferences": {
+            "$ref": "#/components/schemas/MeetingPreferences"
+          },
+          "sign_off": {
+            "default": "Best regards",
+            "maxLength": 100,
+            "title": "Sign Off",
+            "type": "string"
+          },
+          "signature": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Signature",
+            "type": "string"
+          },
+          "timezone": {
+            "default": "UTC",
+            "title": "Timezone",
+            "type": "string"
+          },
+          "tone": {
+            "default": "friendly and professional",
+            "maxLength": 200,
+            "title": "Tone",
+            "type": "string"
+          },
+          "vip_senders": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 200,
+            "title": "Vip Senders",
+            "type": "array"
+          }
+        },
+        "title": "PreferencesBody",
+        "type": "object"
+      },
+      "PriorityItem": {
+        "properties": {
+          "email_id": {
+            "format": "uuid",
+            "title": "Email Id",
+            "type": "string"
+          },
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email_id",
+          "subject",
+          "from_name",
+          "from_email",
+          "summary",
+          "priority",
+          "received_at"
+        ],
+        "title": "PriorityItem",
+        "type": "object"
+      },
+      "ProposedEvent": {
+        "description": "A pending approval shown as a dashed \"ghost\" event.",
+        "properties": {
+          "approval_id": {
+            "format": "uuid",
+            "title": "Approval Id",
+            "type": "string"
+          },
+          "end": {
+            "title": "End",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "start": {
+            "title": "Start",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "approval_id",
+          "title",
+          "start",
+          "end",
+          "reason"
+        ],
+        "title": "ProposedEvent",
+        "type": "object"
+      },
+      "SchedulingDecision": {
+        "properties": {
+          "action": {
+            "enum": [
+              "accept_invite",
+              "tentative_invite",
+              "decline_invite",
+              "propose_new_time",
+              "create_event",
+              "propose_times",
+              "ignore"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "add_video_link": {
+            "default": true,
+            "title": "Add Video Link",
+            "type": "boolean"
+          },
+          "agenda": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agenda"
+          },
+          "attendees": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Attendees",
+            "type": "array"
+          },
+          "confidence": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "boolean"
+          },
+          "proposed_slots": {
+            "items": {
+              "$ref": "#/components/schemas/Slot"
+            },
+            "maxItems": 3,
+            "title": "Proposed Slots",
+            "type": "array"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "slot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Slot"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "required": [
+          "action",
+          "needs_reply",
+          "reason",
+          "confidence"
+        ],
+        "title": "SchedulingDecision",
+        "type": "object"
+      },
+      "SchedulingInfo": {
+        "description": "The scheduling card: what was decided and where it stands.",
+        "properties": {
+          "action_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Id"
+          },
+          "approval_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Id"
+          },
+          "decision": {
+            "$ref": "#/components/schemas/SchedulingDecision"
+          },
+          "state": {
+            "enum": [
+              "auto",
+              "approved",
+              "pending",
+              "undone"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "undo_until": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undo Until"
+          }
+        },
+        "required": [
+          "decision",
+          "state"
+        ],
+        "title": "SchedulingInfo",
+        "type": "object"
+      },
+      "Slot": {
+        "properties": {
+          "end": {
+            "title": "End",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "start": {
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "reason"
+        ],
+        "title": "Slot",
+        "type": "object"
+      },
+      "SyncResponse": {
+        "properties": {
+          "processed": {
+            "title": "Processed",
+            "type": "integer"
+          },
+          "remaining": {
+            "title": "Remaining",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "synced",
+              "already_syncing"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "processed",
+          "remaining"
+        ],
+        "title": "SyncResponse",
+        "type": "object"
+      },
+      "ThreadMessage": {
+        "description": "Another message in the same conversation.",
+        "properties": {
+          "from_email": {
+            "title": "From Email",
+            "type": "string"
+          },
+          "from_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Name"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_sent": {
+            "title": "Is Sent",
+            "type": "boolean"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "snippet": {
+            "title": "Snippet",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "from_email",
+          "from_name",
+          "snippet",
+          "received_at",
+          "is_sent"
+        ],
+        "title": "ThreadMessage",
+        "type": "object"
+      },
+      "TimeRange": {
+        "properties": {
+          "end": {
+            "format": "time",
+            "title": "End",
+            "type": "string"
+          },
+          "start": {
+            "format": "time",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "TimeRange",
+        "type": "object"
+      },
+      "UndoResponse": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "undone": {
+            "title": "Undone",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "undone",
+          "message"
+        ],
+        "title": "UndoResponse",
+        "type": "object"
+      },
+      "VipSuggestion": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "messages": {
+            "title": "Messages",
+            "type": "integer"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "messages"
+        ],
+        "title": "VipSuggestion",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Mail Assistant API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/account": {
+      "delete": {
+        "description": "Delete everything stored about you and sign out. This cannot be undone.",
+        "operationId": "delete_account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAccountBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Delete Account",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/api/account/disconnect": {
+      "post": {
+        "description": "Revoke Google access and stop Gmail push. Your synced data stays until you delete it.",
+        "operationId": "disconnect_google",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Disconnect Google",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/api/activity": {
+      "get": {
+        "description": "Newest first; automatic actions that can still be undone carry their Undo id.",
+        "operationId": "list_activity",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Activity",
+        "tags": [
+          "activity"
+        ]
+      }
+    },
+    "/api/approvals": {
+      "get": {
+        "description": "Approvals with the given status, newest first.",
+        "operationId": "list_approvals",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "pending",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected",
+                "expired",
+                "stale"
+              ],
+              "title": "Status",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApprovalList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Approvals",
+        "tags": [
+          "approvals"
+        ]
+      }
+    },
+    "/api/approvals/{approval_id}/decide": {
+      "post": {
+        "description": "Approve (saves the Gmail draft / books or answers the event) or reject.",
+        "operationId": "decide_approval",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "approval_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Approval Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApprovalDecision"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecideResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Decide Approval",
+        "tags": [
+          "approvals"
+        ]
+      }
+    },
+    "/api/attachments": {
+      "get": {
+        "description": "Attachments matching the query (file name, sender, subject), or the newest ones.",
+        "operationId": "search_attachments",
+        "parameters": [
+          {
+            "description": "e.g. 'invoice pdf ravi'",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. 'invoice pdf ravi'",
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentItem"
+                  },
+                  "title": "Response Search Attachments",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Search Attachments",
+        "tags": [
+          "attachments"
+        ]
+      }
+    },
+    "/api/auth/google/callback": {
+      "get": {
+        "description": "Finish Google sign-in, store tokens, start the Gmail watch, and open the app.",
+        "operationId": "google_callback",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Code"
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "in": "query",
+            "name": "error",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Error"
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Google Callback",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/google/login": {
+      "get": {
+        "description": "Start Google sign-in. State and PKCE verifier are kept in a short-lived signed cookie.",
+        "operationId": "google_login",
+        "responses": {
+          "303": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Google Login",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "description": "Clear the session cookies. (Google access stays connected; see /account/disconnect.)",
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Logout",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/calendar/agenda": {
+      "get": {
+        "description": "Events from Google Calendar; auto-added ones are flagged, pending proposals included.",
+        "operationId": "get_agenda",
+        "parameters": [
+          {
+            "description": "ISO 8601; default now",
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ISO 8601; default now",
+              "title": "From"
+            }
+          },
+          {
+            "description": "ISO 8601; default 7 days later",
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ISO 8601; default 7 days later",
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgendaResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Agenda",
+        "tags": [
+          "calendar"
+        ]
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "description": "Ask about your mail and calendar. Streams `step`, `token`, then `done` (or `error`).",
+        "operationId": "chat",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatStreamEvent"
+                }
+              }
+            },
+            "description": "Server-Sent Events: step, token, done, error"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Chat",
+        "tags": [
+          "chat"
+        ]
+      }
+    },
+    "/api/chat/sessions": {
+      "get": {
+        "operationId": "list_chat_sessions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ChatSessionSummary"
+                  },
+                  "title": "Response List Chat Sessions",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Chat Sessions",
+        "tags": [
+          "chat"
+        ]
+      }
+    },
+    "/api/chat/sessions/{session_id}": {
+      "get": {
+        "operationId": "get_chat_session",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatSessionDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Chat Session",
+        "tags": [
+          "chat"
+        ]
+      }
+    },
+    "/api/dashboard": {
+      "get": {
+        "description": "Category and sentiment counts, priority queue, pending approvals, auto actions today.",
+        "operationId": "get_dashboard",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Dashboard",
+        "tags": [
+          "dashboard"
+        ]
+      }
+    },
+    "/api/digest/today": {
+      "get": {
+        "description": "The most recent digest (built each morning after 08:00 local time), or null.",
+        "operationId": "get_latest_digest",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/Digest"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Get Latest Digest"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Latest Digest",
+        "tags": [
+          "dashboard"
+        ]
+      }
+    },
+    "/api/emails": {
+      "get": {
+        "description": "Received emails with their AI insights, newest first.",
+        "operationId": "list_emails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "action_required",
+                    "fyi",
+                    "meeting_request",
+                    "newsletter",
+                    "promotion",
+                    "other"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "description": "Minimum priority",
+            "in": "query",
+            "name": "priority",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 5,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Minimum priority",
+              "title": "Priority"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sentiment",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "positive",
+                    "neutral",
+                    "negative",
+                    "frustrated",
+                    "urgent"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sentiment"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "unread",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Unread"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Emails",
+        "tags": [
+          "emails"
+        ]
+      }
+    },
+    "/api/emails/{email_id}": {
+      "get": {
+        "description": "One email with insights, attachments and the rest of its thread.",
+        "operationId": "get_email",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Email Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Email",
+        "tags": [
+          "emails"
+        ]
+      }
+    },
+    "/api/emails/{email_id}/draft": {
+      "post": {
+        "description": "Draft reply variants now (they go to Approvals; nothing is sent).",
+        "operationId": "draft_reply",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Email Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowStartResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Draft Reply",
+        "tags": [
+          "emails"
+        ]
+      }
+    },
+    "/api/emails/{email_id}/schedule": {
+      "post": {
+        "description": "Run the scheduling assistant for this email (same rules and auto-scheduling policy).",
+        "operationId": "find_a_time",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Email Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowStartResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Find A Time",
+        "tags": [
+          "emails"
+        ]
+      }
+    },
+    "/api/health": {
+      "get": {
+        "description": "Return ok when the process is up (no external calls, so it stays fast).",
+        "operationId": "get_health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/me": {
+      "get": {
+        "description": "The signed-in user, their Google connection status and when mail was last synced.",
+        "operationId": "get_me",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Me",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/notifications": {
+      "get": {
+        "description": "The latest 50 notifications and the unread count.",
+        "operationId": "list_notifications",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Notifications",
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/api/notifications/read": {
+      "post": {
+        "description": "Mark the given notifications as read (all of them if no ids are given).",
+        "operationId": "mark_notifications_read",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Mark Notifications Read",
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/api/onboarding/complete": {
+      "post": {
+        "description": "Create the AI/* Gmail labels and mark onboarding as done.",
+        "operationId": "complete_onboarding",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Complete Onboarding",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/onboarding/learn-style": {
+      "post": {
+        "description": "Import and embed the last 200 sent emails. Takes up to a couple of minutes.",
+        "operationId": "learn_style",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearnStyleResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Learn Style",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/onboarding/vip-suggestions": {
+      "get": {
+        "description": "Frequent correspondents (call after learn-style, which imports sent mail).",
+        "operationId": "get_vip_suggestions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VipSuggestion"
+                  },
+                  "title": "Response Get Vip Suggestions",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Vip Suggestions",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/preferences": {
+      "get": {
+        "description": "Everything the assistant uses about the user (except notes).",
+        "operationId": "get_preferences",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferencesBody"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Get Preferences",
+        "tags": [
+          "preferences"
+        ]
+      },
+      "put": {
+        "description": "Replace the structured preferences (validated: timezone, time ranges, limits).",
+        "operationId": "update_preferences",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferencesBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferencesBody"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Update Preferences",
+        "tags": [
+          "preferences"
+        ]
+      }
+    },
+    "/api/preferences/notes": {
+      "get": {
+        "description": "Notes, optionally only active / suggested / rejected ones.",
+        "operationId": "list_preference_notes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "active",
+                    "suggested",
+                    "rejected"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PreferenceNoteOut"
+                  },
+                  "title": "Response List Preference Notes",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "List Preference Notes",
+        "tags": [
+          "preferences"
+        ]
+      },
+      "post": {
+        "operationId": "create_preference_note",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenceNoteOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Create Preference Note",
+        "tags": [
+          "preferences"
+        ]
+      }
+    },
+    "/api/preferences/notes/{note_id}": {
+      "delete": {
+        "operationId": "delete_preference_note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "note_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Note Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Delete Preference Note",
+        "tags": [
+          "preferences"
+        ]
+      },
+      "patch": {
+        "description": "Edit a note, or accept (status=active) / reject a learned suggestion.",
+        "operationId": "update_preference_note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "note_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Note Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreferenceNoteOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Update Preference Note",
+        "tags": [
+          "preferences"
+        ]
+      }
+    },
+    "/api/scheduling-actions/{action_id}/undo": {
+      "post": {
+        "description": "Undo an automatic action within its window (delete the event / reset the response).",
+        "operationId": "undo_scheduling_action",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "action_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Action Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UndoResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Undo Scheduling Action",
+        "tags": [
+          "calendar"
+        ]
+      }
+    },
+    "/api/sync": {
+      "post": {
+        "description": "Fetch new mail now. Runs exactly the same code as the Gmail push handler.",
+        "operationId": "sync_now",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Client error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Server error"
+          }
+        },
+        "summary": "Sync Now",
+        "tags": [
+          "emails"
+        ]
+      }
+    }
+  }
+}

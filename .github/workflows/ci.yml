@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      # Dummy values: CI never calls Google or the LLM providers.
+      GOOGLE_API_KEY: ci-dummy-key
+      SESSION_SECRET: ci-session-secret-that-is-at-least-32-characters-long
+      TOKEN_ENCRYPTION_KEY: 5Jl7lV5y0n5hY0H8q2lJ0mJm3QYg8Jc8gq0b1pX3Z1k=
+      TEST_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.9.11"
+      - run: uv sync --frozen
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Types
+        run: uv run mypy
+      - name: Tests
+        run: uv run pytest
+      - name: OpenAPI drift check
+        run: |
+          uv run python -m scripts.export_openapi
+          git diff --exit-code openapi.json
