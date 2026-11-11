@@ -19,3 +19,4 @@ htmlcov/
 .DS_Store
 Thumbs.db
 tests/evals/results/
+tests/scenarios/results/

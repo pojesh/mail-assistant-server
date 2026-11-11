@@ -119,6 +119,26 @@ uv run ruff check . && uv run ruff format --check . && uv run mypy
 injection flagged and never auto-scheduled). Latest Gemini run: category 92%, sentiment 82%,
 scheduling 100%, 0 violations, 5/5 injections.
 
+**Scenario evaluation** (real model calls, run manually; results at `localhost:3000/eval`):
+
+```bash
+uv run pytest tests/scenarios              # everything
+uv run pytest tests/scenarios -k chat      # one part: triage | scheduling | chat | flow
+```
+
+- Models under test: the ones in `.env`. Override for a run with `EVAL_LLM_PROVIDER`,
+  `EVAL_LLM_FAST_MODEL`, `EVAL_LLM_SMART_MODEL`, `EVAL_LLM_REQUESTS_PER_MINUTE`.
+- **Triage** (45 emails): category, priority range, sentiment, needs-reply, meeting detection,
+  injections. **Scheduling** (17): action, auto vs approval, hard rules. **User flows** (6): the
+  whole graph plus approve / edit / undo through the API and a chat hand-off. **Chat** (16
+  questions): tool choice, context and citation precision/recall, and an LLM judge (HCL AI Cafe
+  GPT-4.1, `AICAFE_*` in `.env`) for faithfulness, grounding and answer correctness.
+- Latency per step (rate-limit waits removed) and model calls per step are recorded.
+- Gmail and Calendar are fakes; chat and flow data live in a `scenario_suite` schema of the
+  local Docker database (the run refuses any non-local database).
+- Output: `tests/scenarios/RESULTS.md` and `tests/scenarios/results/latest.json` (newest run of
+  each suite). Plain `uv run pytest tests` skips these tests.
+
 ## Security checklist
 
 - [x] OAuth tokens Fernet-encrypted at rest; key in Secret Manager.

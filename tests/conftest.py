@@ -35,8 +35,13 @@ class RealLLMCallError(AssertionError):
 
 
 @pytest.fixture(autouse=True)
-def block_real_llm_calls(monkeypatch: pytest.MonkeyPatch) -> None:
-    """No test may reach Gemini or Groq: model objects can be built, but not called."""
+def block_real_llm_calls(request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch) -> None:
+    """No test may reach Gemini or Groq: model objects can be built, but not called.
+
+    The only exception is tests/scenarios (marked `real_llm`), the on-demand evaluation suite.
+    """
+    if request.node.get_closest_marker("real_llm"):
+        return
     from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
     from langchain_groq import ChatGroq
 
